@@ -1,13 +1,15 @@
 # ----------------------------------
 # Pterodactyl Core Dockerfile
-# Environment: Java
+# Environment: Java (glibc support)
 # Minimum Panel Version: 0.6.0
 # ----------------------------------
-FROM openjdk:8-jre-alpine
+FROM frolvlad/alpine-oraclejdk8:cleaned
 
 MAINTAINER Pterodactyl Software, <support@pterodactyl.io>
 
-RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite \
+RUN apk update \
+    && apk upgrade \
+    && apk add --no-cache --update openjdk7-jre curl ca-certificates openssl git tar bash sqlite \
     && adduser -D -h /home/container container
 
 USER container
